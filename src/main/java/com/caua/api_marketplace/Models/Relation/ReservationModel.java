@@ -16,15 +16,19 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class Reservation {
+
+public class ReservationModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "client_id", nullable = false)
     private UserClientModel client;
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "producer_id", nullable = false)
     private UserProducerModel producer;
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "product_id", nullable = false)
     private ProductModel product;
     @Column(nullable = false)
     private int quantity;

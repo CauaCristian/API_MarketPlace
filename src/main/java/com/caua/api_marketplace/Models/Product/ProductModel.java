@@ -12,6 +12,7 @@ import lombok.*;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
+
 public class ProductModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +25,7 @@ public class ProductModel {
     private int quantity;
     @Column(nullable = false)
     private String category;
-    @OneToOne()
-    private UserProducerModel Producer;
+    @ManyToOne
+    @JoinColumn(name = "producer_id", nullable = false)
+    private UserProducerModel producer;
 }

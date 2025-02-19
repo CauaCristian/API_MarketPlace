@@ -24,6 +24,18 @@ public class UserProducerModel extends UserModel {
     @OneToMany(mappedBy = "producer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ReservationModel> reservations = new ArrayList<>();
 
+    public UserProducerModel(String surname, String farm, String rating, String numRating, List<ProductModel> products, List<ReservationModel> reservations) {
+        this.surname = surname;
+        this.farm = farm;
+        this.rating = rating;
+        this.numRating = numRating;
+        this.products = products;
+        this.reservations = reservations;
+    }
+
+    public UserProducerModel() {
+    }
+
     public String getSurname() {
         return surname;
     }

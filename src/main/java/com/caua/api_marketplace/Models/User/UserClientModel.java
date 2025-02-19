@@ -13,6 +13,13 @@ public class UserClientModel extends UserModel {
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ReservationModel> reservations = new ArrayList<>();
 
+    public UserClientModel() {
+    }
+
+    public UserClientModel(List<ReservationModel> reservations) {
+        this.reservations = reservations;
+    }
+
     public List<ReservationModel> getReservations() {
         return reservations;
     }

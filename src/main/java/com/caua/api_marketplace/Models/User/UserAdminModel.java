@@ -10,6 +10,13 @@ public class UserAdminModel extends UserModel {
     @Column(nullable=false)
     private String identification;
 
+    public UserAdminModel() {
+    }
+
+    public UserAdminModel(String identification) {
+        this.identification = identification;
+    }
+
     public String getIdentification() {
         return identification;
     }

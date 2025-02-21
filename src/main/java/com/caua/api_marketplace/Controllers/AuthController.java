@@ -16,10 +16,6 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
     @Autowired
     AuthService authService ;
-    @GetMapping()
-    public String get() {
-        return "ok";
-    }
     @PostMapping(value = "registerProducer", produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
     public UserProducerModel registerProducer(@RequestBody UserProducerDTO userProducerDTO) {
         return authService.registerUserProducer(userProducerDTO);

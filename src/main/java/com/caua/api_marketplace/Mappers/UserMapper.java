@@ -6,6 +6,7 @@ import com.caua.api_marketplace.DTO.User.UserProducerDTO;
 import com.caua.api_marketplace.Models.User.UserAdminModel;
 import com.caua.api_marketplace.Models.User.UserClientModel;
 import com.caua.api_marketplace.Models.User.UserProducerModel;
+import com.caua.api_marketplace.Models.User.UserRole;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,9 +18,10 @@ public class UserMapper {
         userClientModel.setEmail(userClientDTO.getEmail());
         userClientModel.setAddress(userClientDTO.getAddress());
         userClientModel.setPhone(userClientDTO.getPhone());
-        userClientModel.setImagem(userClientDTO.getImagem());
+        userClientModel.setImage(userClientDTO.getImage());
         userClientModel.setCpf(userClientDTO.getCpf());
         userClientModel.setDateOfBirth(userClientDTO.getDateOfBirth());
+        userClientModel.setRole(UserRole.UserClient);
         return userClientModel;
     }
     public UserClientDTO userClientModelToUserClientDTO(UserClientModel userClientModel) {
@@ -29,7 +31,7 @@ public class UserMapper {
         userClientDTO.setEmail(userClientModel.getEmail());
         userClientDTO.setAddress(userClientModel.getAddress());
         userClientDTO.setPhone(userClientModel.getPhone());
-        userClientDTO.setImagem(userClientModel.getImagem());
+        userClientDTO.setImage(userClientModel.getImage());
         userClientDTO.setCpf(userClientModel.getCpf());
         userClientDTO.setDateOfBirth(userClientModel.getDateOfBirth());
         return userClientDTO;
@@ -41,13 +43,14 @@ public class UserMapper {
         userProducerModel.setEmail(userProducerDTO.getEmail());
         userProducerModel.setAddress(userProducerDTO.getAddress());
         userProducerModel.setPhone(userProducerDTO.getPhone());
-        userProducerModel.setImagem(userProducerDTO.getImagem());
+        userProducerModel.setImage(userProducerDTO.getImage());
         userProducerModel.setCpf(userProducerDTO.getCpf());
         userProducerModel.setDateOfBirth(userProducerDTO.getDateOfBirth());
         userProducerModel.setSurname(userProducerDTO.getSurname());
         userProducerModel.setRating(userProducerDTO.getRating());
         userProducerModel.setNumRating(userProducerDTO.getNumRating());
         userProducerModel.setFarm(userProducerDTO.getFarm());
+        userProducerModel.setRole(UserRole.UserProducer);
         return userProducerModel;
     }
     public UserProducerDTO userProducerModelToUserProducerDTO(UserProducerModel userProducerModel) {
@@ -57,7 +60,7 @@ public class UserMapper {
         userProducerDTO.setEmail(userProducerModel.getEmail());
         userProducerDTO.setAddress(userProducerModel.getAddress());
         userProducerDTO.setPhone(userProducerModel.getPhone());
-        userProducerDTO.setImagem(userProducerModel.getImagem());
+        userProducerDTO.setImage(userProducerModel.getImage());
         userProducerDTO.setCpf(userProducerModel.getCpf());
         userProducerDTO.setDateOfBirth(userProducerModel.getDateOfBirth());
         userProducerDTO.setSurname(userProducerModel.getSurname());
@@ -73,10 +76,11 @@ public class UserMapper {
         userAdminModel.setEmail(userAdminDTO.getEmail());
         userAdminModel.setAddress(userAdminDTO.getAddress());
         userAdminModel.setPhone(userAdminDTO.getPhone());
-        userAdminModel.setImagem(userAdminDTO.getImagem());
+        userAdminModel.setImage(userAdminDTO.getImage());
         userAdminModel.setCpf(userAdminDTO.getCpf());
         userAdminModel.setDateOfBirth(userAdminDTO.getDateOfBirth());
         userAdminModel.setIdentification(userAdminDTO.getIdentification());
+        userAdminModel.setRole(UserRole.UserAdmin);
         return userAdminModel;
     }
     public UserAdminDTO userAdminModelToUserAdminDTO(UserAdminModel userAdminModel) {
@@ -86,10 +90,11 @@ public class UserMapper {
         userAdminDTO.setEmail(userAdminModel.getEmail());
         userAdminDTO.setAddress(userAdminModel.getAddress());
         userAdminDTO.setPhone(userAdminModel.getPhone());
-        userAdminDTO.setImagem(userAdminModel.getImagem());
+        userAdminDTO.setImage(userAdminModel.getImage());
         userAdminDTO.setCpf(userAdminModel.getCpf());
         userAdminDTO.setDateOfBirth(userAdminModel.getDateOfBirth());
         userAdminDTO.setIdentification(userAdminModel.getIdentification());
+
         return userAdminDTO;
     }
 }

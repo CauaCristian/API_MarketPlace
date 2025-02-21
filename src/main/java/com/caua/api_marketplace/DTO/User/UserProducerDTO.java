@@ -1,5 +1,6 @@
 package com.caua.api_marketplace.DTO.User;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Column;
 
 import java.time.LocalDate;
@@ -21,8 +22,8 @@ public class UserProducerDTO {
     private String cpf;
 
     private LocalDate dateOfBirth;
-
-    private byte[] imagem;
+    @JsonProperty("image")
+    private byte[] image;
 
     private String surname;
 
@@ -32,12 +33,11 @@ public class UserProducerDTO {
 
     private String numRating;
 
-    public byte[] getImagem() {
-        return imagem;
+    public byte[] getImage() {
+        return image;
     }
-
-    public void setImagem(byte[] imagem) {
-        this.imagem = imagem;
+    public void setImage(byte[] imagem) {
+        this.image = imagem;
     }
 
     public Long getId() {

@@ -1,6 +1,7 @@
 package com.caua.api_marketplace.Models.User;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.time.LocalDate;
 import java.util.Collection;
@@ -15,47 +16,52 @@ public abstract class UserModel implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String username;
     @Column(nullable=false)
     private String password;
-    @Column(nullable=false)
+    @Column(nullable=false,unique = true)
     private String email;
-    @Column(nullable=false)
+    @Column(nullable=false,unique = true)
     private String phone;
     @Column(nullable=false)
     private String address;
-    @Column(nullable=false)
+    @Column(nullable=false,unique = true)
     private String cpf;
     @Column(nullable=false)
     private LocalDate dateOfBirth;
     @Lob
     @Column(columnDefinition = "LONGBLOB")
-    private byte[] imagem;
+    private byte[] image;
+    @Column(nullable=false)
+    private UserRole role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        if(this.role == UserRole.UserAdmin) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_CLIENT"), new SimpleGrantedAuthority("ROLE_PRODUCER"));
+        if(this.role == UserRole.UserClient) return List.of(new SimpleGrantedAuthority("ROLE_CLIENT"));
+        if(this.role == UserRole.UserProducer) return List.of(new SimpleGrantedAuthority("ROLE_PRODUCER"));
+        return null;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return UserDetails.super.isAccountNonExpired();
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return UserDetails.super.isAccountNonLocked();
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return UserDetails.super.isCredentialsNonExpired();
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return UserDetails.super.isEnabled();
+        return true;
     }
 
     public Long getId() {
@@ -120,12 +126,19 @@ public abstract class UserModel implements UserDetails {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public byte[] getImagem() {
-        return imagem;
+    public byte[] getImage() {
+        return image;
     }
 
-    public void setImagem(byte[] imagem) {
-        this.imagem = imagem;
+    public void setImage(byte[] imagem) {
+        this.image = imagem;
     }
 
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
 }

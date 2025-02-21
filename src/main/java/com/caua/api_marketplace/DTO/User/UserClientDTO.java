@@ -1,4 +1,6 @@
 package com.caua.api_marketplace.DTO.User;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.time.LocalDate;
 
 public class UserClientDTO {
@@ -18,14 +20,15 @@ public class UserClientDTO {
 
     private LocalDate dateOfBirth;
 
-    private byte[] imagem;
+    @JsonProperty("image")
+    private byte[] image;
 
-    public byte[] getImagem() {
-        return imagem;
+    public byte[] getImage() {
+        return image;
     }
 
-    public void setImagem(byte[] imagem) {
-        this.imagem = imagem;
+    public void setImage(byte[] imagem) {
+        this.image = imagem;
     }
 
     public Long getId() {

@@ -1,20 +1,39 @@
 package com.caua.api_marketplace.config.security;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
     @Bean
-   public SecurityFilterChain configure(final HttpSecurity http) throws Exception {
-       return http
-               .csrf(csrf-> csrf.disable())
-               .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-               .build();
-   }
+    public SecurityFilterChain configure(final HttpSecurity http) throws Exception {
+        return http
+                .csrf(csrf-> csrf.disable())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(authorizeRequests -> authorizeRequests
+                        .requestMatchers(HttpMethod.POST , "/auth/registerClient").permitAll()
+                        .requestMatchers(HttpMethod.POST , "/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.POST , "/auth/registerAdmin").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.POST , "/auth/registerProducer").hasAuthority("ROLE_ADMIN")
+                        .anyRequest().authenticated()
+                )
+                .build();
+    }
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
 }

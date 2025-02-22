@@ -2,9 +2,9 @@ package com.caua.api_marketplace.Models.User;
 
 public enum UserRole {
 
-    UserAdmin("Admin"),
-    UserClient("Client"),
-    UserProducer("Producer");
+    UserAdmin("ROLE_ADMIN"),
+    UserClient("ROLE_CLIENT"),
+    UserProducer("ROLE_PRODUCER");
 
     private String role;
 

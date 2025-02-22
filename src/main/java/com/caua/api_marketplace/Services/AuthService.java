@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -34,18 +35,24 @@ public class AuthService implements UserDetailsService {
     public UserClientModel registerUserClient(UserClientDTO userClientDTO) {
         UserClientModel userClientModel = userMapper.userClientDTOToUserClientModel(userClientDTO);
         userClientModel.setRole(UserRole.UserClient);
+        String EncryptedPassword = new BCryptPasswordEncoder().encode(userClientDTO.getPassword());
+        userClientModel.setPassword(EncryptedPassword);
         return userClientRepository.save(userClientModel);
     }
 
     public UserProducerModel registerUserProducer(UserProducerDTO userProducerDTO) {
         UserProducerModel userProducerModel = userMapper.userProducerDTOToUserProducerModel(userProducerDTO);
         userProducerModel.setRole(UserRole.UserProducer);
+        String EncryptedPassword = new BCryptPasswordEncoder().encode(userProducerDTO.getPassword());
+        userProducerModel.setPassword(EncryptedPassword);
         return userProducerRepository.save(userProducerModel);
     }
 
     public UserAdminModel registerUserAdmin(UserAdminDTO userAdminDTO) {
         UserAdminModel userAdminModel = userMapper.userAdminDTOToUserAdminModel(userAdminDTO);
         userAdminModel.setRole(UserRole.UserAdmin);
+        String EncryptedPassword = new BCryptPasswordEncoder().encode(userAdminDTO.getPassword());
+        userAdminModel.setPassword(EncryptedPassword);
         return userAdminRepository.save(userAdminModel);
     }
 

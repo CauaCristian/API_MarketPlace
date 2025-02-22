@@ -7,11 +7,12 @@ import com.caua.api_marketplace.DTO.User.UserClientDTO;
 import com.caua.api_marketplace.DTO.User.UserProducerDTO;
 import com.caua.api_marketplace.Models.User.UserAdminModel;
 import com.caua.api_marketplace.Models.User.UserClientModel;
+import com.caua.api_marketplace.Models.User.UserModel;
 import com.caua.api_marketplace.Models.User.UserProducerModel;
 import com.caua.api_marketplace.Services.AuthService;
+import com.caua.api_marketplace.Services.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
@@ -23,13 +24,17 @@ public class AuthController {
     AuthService authService ;
 
     @Autowired
+    TokenService tokenService;
+
+    @Autowired
     AuthenticationManager authenticationManager;
 
     @PostMapping("/login")
     public ResponseLoginDTO login(@RequestBody LoginDTO loginDTO) {
         var usernamePassword = new UsernamePasswordAuthenticationToken(loginDTO.getUsername(),loginDTO.getPassword());
         var auth = this.authenticationManager.authenticate(usernamePassword);
-        return new ResponseLoginDTO("login efetuado com sucesso",false,auth.toString(), authService.loadUserByUsername(loginDTO.getUsername()));
+        var token = tokenService.generateToken((UserModel) auth.getPrincipal());
+        return new ResponseLoginDTO("login efetuado com sucesso",false,token, authService.loadUserByUsername(loginDTO.getUsername()));
     }
     @PostMapping(value = "/registerProducer", produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
     public UserProducerModel registerProducer(@RequestBody UserProducerDTO userProducerDTO) {

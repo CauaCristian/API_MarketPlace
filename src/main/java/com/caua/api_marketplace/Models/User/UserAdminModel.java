@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 
 public class UserAdminModel extends UserModel {
 
-    @Column(nullable=false)
+    @Column(nullable=false,unique = true)
     private String identification;
 
     public UserAdminModel() {

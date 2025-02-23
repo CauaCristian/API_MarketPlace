@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserAdminRepository extends JpaRepository<UserAdminModel, Long> {
+    UserAdminModel findByIdentification(String identification);
 }

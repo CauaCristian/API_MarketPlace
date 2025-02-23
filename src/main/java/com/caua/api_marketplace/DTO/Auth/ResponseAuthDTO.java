@@ -1,14 +1,12 @@
-package com.caua.api_marketplace.DTO.Response;
+package com.caua.api_marketplace.DTO.Auth;
 
-import org.springframework.security.core.userdetails.UserDetails;
-
-public class ResponseDTO<Type> {
+public class ResponseAuthDTO<Type> {
     private String message;
     private boolean error;
     private String token;
     private Type data;
 
-    public ResponseDTO(String message, boolean error, String token, Type data) {
+    public ResponseAuthDTO(String message, boolean error, String token, Type data) {
         this.message = message;
         this.error = error;
         this.token = token;

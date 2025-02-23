@@ -11,7 +11,7 @@ import java.util.List;
 
 public class UserProducerModel extends UserModel {
 
-    @Column(nullable=false)
+    @Column(nullable=false, unique = true)
     private String surname;
     @Column(nullable=false)
     private String farm;

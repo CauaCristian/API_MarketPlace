@@ -1,18 +1,18 @@
 package com.caua.api_marketplace.Services;
-
+import com.caua.api_marketplace.DTO.Response.ResponseDTO;
 import com.caua.api_marketplace.DTO.User.UserAdminDTO;
 import com.caua.api_marketplace.DTO.User.UserClientDTO;
 import com.caua.api_marketplace.DTO.User.UserProducerDTO;
 import com.caua.api_marketplace.Mappers.UserMapper;
-import com.caua.api_marketplace.Models.User.UserAdminModel;
-import com.caua.api_marketplace.Models.User.UserClientModel;
-import com.caua.api_marketplace.Models.User.UserProducerModel;
-import com.caua.api_marketplace.Models.User.UserRole;
+import com.caua.api_marketplace.Models.User.*;
 import com.caua.api_marketplace.Repository.User.UserAdminRepository;
 import com.caua.api_marketplace.Repository.User.UserClientRepository;
 import com.caua.api_marketplace.Repository.User.UserProducerRepository;
 import com.caua.api_marketplace.Repository.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -31,29 +31,50 @@ public class AuthService implements UserDetailsService {
     private UserClientRepository userClientRepository;
     @Autowired
     private UserProducerRepository userProducerRepository;
+    @Autowired
+    private TokenService tokenService;
+    @Autowired
+    @Lazy
+    private AuthenticationManager authenticationManager;
 
-    public UserClientModel registerUserClient(UserClientDTO userClientDTO) {
+    public ResponseDTO<UserDetails> login(String username, String password){
+        var usernamePassword = new UsernamePasswordAuthenticationToken(username, password);
+        var auth = this.authenticationManager.authenticate(usernamePassword);
+        var token = tokenService.generateToken((UserModel) auth.getPrincipal());
+        return new ResponseDTO<UserDetails>("login efetuado com sucesso",false,token, loadUserByUsername(username));
+    }
+
+    public ResponseDTO<UserClientModel> registerUserClient(UserClientDTO userClientDTO) {
         UserClientModel userClientModel = userMapper.userClientDTOToUserClientModel(userClientDTO);
         userClientModel.setRole(UserRole.UserClient);
         String EncryptedPassword = new BCryptPasswordEncoder().encode(userClientDTO.getPassword());
         userClientModel.setPassword(EncryptedPassword);
-        return userClientRepository.save(userClientModel);
+        var usernamePassword = new UsernamePasswordAuthenticationToken(userClientDTO.getUsername(), userClientDTO.getPassword());
+        var auth = this.authenticationManager.authenticate(usernamePassword);
+        var token = tokenService.generateToken((UserModel) auth.getPrincipal());
+        return new ResponseDTO<UserClientModel>("registro efetuado com sucesso",false,token, userClientRepository.save(userClientModel));
     }
 
-    public UserProducerModel registerUserProducer(UserProducerDTO userProducerDTO) {
+    public ResponseDTO<UserProducerModel> registerUserProducer(UserProducerDTO userProducerDTO) {
         UserProducerModel userProducerModel = userMapper.userProducerDTOToUserProducerModel(userProducerDTO);
         userProducerModel.setRole(UserRole.UserProducer);
         String EncryptedPassword = new BCryptPasswordEncoder().encode(userProducerDTO.getPassword());
         userProducerModel.setPassword(EncryptedPassword);
-        return userProducerRepository.save(userProducerModel);
+        var usernamePassword = new UsernamePasswordAuthenticationToken(userProducerDTO.getUsername(), userProducerDTO.getPassword());
+        var auth = this.authenticationManager.authenticate(usernamePassword);
+        var token = tokenService.generateToken((UserModel) auth.getPrincipal());
+        return new ResponseDTO<UserProducerModel>("registro efetuado com sucesso",false,token, userProducerRepository.save(userProducerModel));
     }
 
-    public UserAdminModel registerUserAdmin(UserAdminDTO userAdminDTO) {
+    public ResponseDTO<UserAdminModel> registerUserAdmin(UserAdminDTO userAdminDTO) {
         UserAdminModel userAdminModel = userMapper.userAdminDTOToUserAdminModel(userAdminDTO);
         userAdminModel.setRole(UserRole.UserAdmin);
         String EncryptedPassword = new BCryptPasswordEncoder().encode(userAdminDTO.getPassword());
         userAdminModel.setPassword(EncryptedPassword);
-        return userAdminRepository.save(userAdminModel);
+        var usernamePassword = new UsernamePasswordAuthenticationToken(userAdminDTO.getUsername(), userAdminDTO.getPassword());
+        var auth = this.authenticationManager.authenticate(usernamePassword);
+        var token = tokenService.generateToken((UserModel) auth.getPrincipal());
+        return new ResponseDTO<UserAdminModel>("registro efetuado com sucesso",false,token, userAdminRepository.save(userAdminModel));
     }
 
     @Override

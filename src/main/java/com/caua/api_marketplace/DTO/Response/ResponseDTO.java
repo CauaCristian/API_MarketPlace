@@ -1,16 +1,14 @@
-package com.caua.api_marketplace.DTO.Auth;
+package com.caua.api_marketplace.DTO.Response;
 
-import com.caua.api_marketplace.Models.User.UserModel;
 import org.springframework.security.core.userdetails.UserDetails;
 
-public class ResponseLoginDTO {
-
+public class ResponseDTO<Type> {
     private String message;
     private boolean error;
     private String token;
-    private UserDetails data;
+    private Type data;
 
-    public ResponseLoginDTO(String message, boolean error, String token, UserDetails data) {
+    public ResponseDTO(String message, boolean error, String token, Type data) {
         this.message = message;
         this.error = error;
         this.token = token;
@@ -41,11 +39,11 @@ public class ResponseLoginDTO {
         this.token = token;
     }
 
-    public UserDetails getData() {
+    public Type getData() {
         return data;
     }
 
-    public void setData(UserDetails data) {
+    public void setData(Type data) {
         this.data = data;
     }
 }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDate;
 
 public class UserClientDTO {
+
     private Long id;
 
     private String username;

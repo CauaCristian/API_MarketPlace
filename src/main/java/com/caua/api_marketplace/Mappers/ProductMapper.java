@@ -26,7 +26,6 @@ public class ProductMapper {
         return productDTO;
     }
     public ProductModel ProductDTOToProductModel(ProductDTO productDTO) {
-        System.out.println("Producer ID: " + productDTO.getProducerId());
         ProductModel productModel = new ProductModel();
         productModel.setName(productDTO.getName());
         productModel.setPrice(productDTO.getPrice());

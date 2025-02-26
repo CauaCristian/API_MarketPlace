@@ -16,8 +16,9 @@ public class ProductService {
     @Autowired
     private ProductMapper productMapper;
 
-    public ResponseDTO<ProductModel> createProduct(ProductDTO productDTO){
+    public ResponseDTO<ProductDTO> createProduct(ProductDTO productDTO){
         ProductModel productModel = productRepository.save(productMapper.ProductDTOToProductModel(productDTO));
-        return new ResponseDTO<ProductModel>("Produto criado com sucesso",false,productModel);
+        ProductDTO product = productMapper.ProductModelToProductDTO(productModel);
+        return new ResponseDTO<ProductDTO>("Produto criado com sucesso",false,productDTO);
     }
 }

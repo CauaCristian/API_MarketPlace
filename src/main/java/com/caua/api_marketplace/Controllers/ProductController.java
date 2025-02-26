@@ -19,7 +19,7 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping(value = "/create",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseDTO<ProductModel> createProduct(@RequestBody ProductDTO productDTO) {
+    public ResponseDTO<ProductDTO> createProduct(@RequestBody ProductDTO productDTO) {
         return productService.createProduct(productDTO);
     }
 

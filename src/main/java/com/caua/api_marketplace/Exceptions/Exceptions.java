@@ -1,4 +1,7 @@
 package com.caua.api_marketplace.Exceptions;
 
-public class Exceptions {
+import ch.qos.logback.core.model.processor.ModelHandlerException;
+
+public class Exceptions extends ModelHandlerException {
+    
 }

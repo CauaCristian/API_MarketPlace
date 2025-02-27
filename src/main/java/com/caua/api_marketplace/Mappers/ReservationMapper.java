@@ -25,7 +25,6 @@ public class ReservationMapper {
 
     public ReservationModel reservationDTOToReservationModel(ReservationDTO reservationDTO){
         ReservationModel reservationModel = new ReservationModel();
-        reservationModel.setId(reservationDTO.getId());
         reservationModel.setDateReservation(reservationDTO.getDateReservation());
         reservationModel.setPrice(reservationDTO.getPrice());
         reservationModel.setQuantity(reservationDTO.getQuantity());

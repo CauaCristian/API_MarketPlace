@@ -31,12 +31,12 @@ public class AuthController {
     }
 
     @PostMapping(value = "/registerProducer", produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseAuthDTO<UserProducerModel> registerProducer(@RequestBody RegisterProducerDTO registerProducerDTO) {
+    public ResponseAuthDTO<UserProducerDTO> registerProducer(@RequestBody RegisterProducerDTO registerProducerDTO) {
         return authService.registerUserProducer(registerProducerDTO);
     }
 
     @PostMapping(value = "/registerAdmin",produces =  MediaType.APPLICATION_JSON_VALUE,consumes =  MediaType.APPLICATION_JSON_VALUE)
-    public ResponseAuthDTO<UserAdminModel> registerAdmin(@RequestBody RegisterAdminDTO registerAdminDTO) {
+    public ResponseAuthDTO<UserAdminDTO> registerAdmin(@RequestBody RegisterAdminDTO registerAdminDTO) {
         return authService.registerUserAdmin(registerAdminDTO);
     }
 }

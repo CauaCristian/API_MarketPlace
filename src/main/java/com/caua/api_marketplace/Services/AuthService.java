@@ -1,5 +1,7 @@
 package com.caua.api_marketplace.Services;
+import com.caua.api_marketplace.DTO.Auth.RegisterAdminDTO;
 import com.caua.api_marketplace.DTO.Auth.RegisterClientDTO;
+import com.caua.api_marketplace.DTO.Auth.RegisterProducerDTO;
 import com.caua.api_marketplace.DTO.Auth.ResponseAuthDTO;
 import com.caua.api_marketplace.DTO.User.UserAdminDTO;
 import com.caua.api_marketplace.DTO.User.UserClientDTO;
@@ -53,7 +55,6 @@ public class AuthService implements UserDetailsService {
         if(userRepository.findByCpf(registerClientDTO.getCpf()) != null)return new ResponseAuthDTO<UserClientDTO>("cpf em uso",true,null, null);
 
         UserClientModel userClientModel = userMapper.registerClientDTOToUserClientModel(registerClientDTO);
-        userClientModel.setRole(UserRole.UserClient);
         String EncryptedPassword = new BCryptPasswordEncoder().encode(registerClientDTO.getPassword());
         userClientModel.setPassword(EncryptedPassword);
         UserClientModel userClient = userClientRepository.save(userClientModel);
@@ -64,44 +65,44 @@ public class AuthService implements UserDetailsService {
         return new ResponseAuthDTO<UserClientDTO>("registro efetuado com sucesso",false,token, userClientDTO);
     }
 
-    public ResponseAuthDTO<UserProducerDTO> registerUserProducer(UserProducerDTO userProducerDTO) {
+    public ResponseAuthDTO<UserProducerDTO> registerUserProducer(RegisterProducerDTO registerProducerDTO) {
 
-        if(userRepository.findByUsername(userProducerDTO.getUsername()) != null)return new ResponseAuthDTO<UserProducerModel>("Username existente",true,null, null);
-        if(userRepository.findByEmail(userProducerDTO.getEmail()) != null)return new ResponseAuthDTO<UserProducerModel>("Email em uso",true,null, null);
-        if(userRepository.findByPhone(userProducerDTO.getPhone()) != null)return new ResponseAuthDTO<UserProducerModel>("Numero de telefone em uso",true,null, null);
-        if(userRepository.findByCpf(userProducerDTO.getCpf()) != null)return new ResponseAuthDTO<UserProducerModel>("Cpf em uso",true,null, null);
-        if(userProducerRepository.findBySurname(userProducerDTO.getSurname()) != null) return new ResponseAuthDTO<UserProducerModel>("Surname existente",true,null, null);
+        if(userRepository.findByUsername(registerProducerDTO.getUsername()) != null)return new ResponseAuthDTO<UserProducerDTO>("Username existente",true,null, null);
+        if(userRepository.findByEmail(registerProducerDTO.getEmail()) != null)return new ResponseAuthDTO<UserProducerDTO>("Email em uso",true,null, null);
+        if(userRepository.findByPhone(registerProducerDTO.getPhone()) != null)return new ResponseAuthDTO<UserProducerDTO>("Numero de telefone em uso",true,null, null);
+        if(userRepository.findByCpf(registerProducerDTO.getCpf()) != null)return new ResponseAuthDTO<UserProducerDTO>("Cpf em uso",true,null, null);
+        if(userProducerRepository.findBySurname(registerProducerDTO.getSurname()) != null) return new ResponseAuthDTO<UserProducerDTO>("Surname existente",true,null, null);
 
-        UserProducerModel userProducerModel = userMapper.userProducerDTOToUserProducerModel(userProducerDTO);
-        userProducerModel.setRole(UserRole.UserProducer);
-        String EncryptedPassword = new BCryptPasswordEncoder().encode(userProducerDTO.getPassword());
+        UserProducerModel userProducerModel = userMapper.registerProducerDTOToUserProducerModel(registerProducerDTO);
+        String EncryptedPassword = new BCryptPasswordEncoder().encode(registerProducerDTO.getPassword());
         userProducerModel.setPassword(EncryptedPassword);
         var userProducer = userProducerRepository.save(userProducerModel);
-        var usernamePassword = new UsernamePasswordAuthenticationToken(userProducerDTO.getUsername(), userProducerDTO.getPassword());
+        var usernamePassword = new UsernamePasswordAuthenticationToken(registerProducerDTO.getUsername(), registerProducerDTO.getPassword());
         var auth = this.authenticationManager.authenticate(usernamePassword);
         var token = tokenService.generateToken((UserModel) auth.getPrincipal());
         userProducer.setPassword(null);
-        return new ResponseAuthDTO<UserProducerModel>("registro efetuado com sucesso",false,token, userProducer);
+        UserProducerDTO userProducerDTO = userMapper.userProducerModelToUserProducerDTO(userProducer);
+        return new ResponseAuthDTO<UserProducerDTO>("registro efetuado com sucesso",false,token, userProducerDTO);
     }
 
-    public ResponseAuthDTO<UserAdminDTO> registerUserAdmin(UserAdminDTO userAdminDTO) {
+    public ResponseAuthDTO<UserAdminDTO> registerUserAdmin(RegisterAdminDTO registerAdminDTO) {
 
-        if(userRepository.findByUsername(userAdminDTO.getUsername()) != null)return new ResponseAuthDTO<UserAdminModel>("Username existente",true,null, null);
-        if(userRepository.findByEmail(userAdminDTO.getEmail()) != null)return new ResponseAuthDTO<UserAdminModel>("Email em uso",true,null, null);
-        if(userRepository.findByPhone(userAdminDTO.getPhone()) != null)return new ResponseAuthDTO<UserAdminModel>("Numero de telefone em uso",true,null, null);
-        if(userRepository.findByCpf(userAdminDTO.getCpf()) != null)return new ResponseAuthDTO<UserAdminModel>("Cpf em uso",true,null, null);
-        if(userAdminRepository.findByIdentification(userAdminDTO.getIdentification()) != null) return new ResponseAuthDTO<UserAdminModel>("identificaçao em uso",true,null, null);
+        if(userRepository.findByUsername(registerAdminDTO.getUsername()) != null)return new ResponseAuthDTO<UserAdminDTO>("Username existente",true,null, null);
+        if(userRepository.findByEmail(registerAdminDTO.getEmail()) != null)return new ResponseAuthDTO<UserAdminDTO>("Email em uso",true,null, null);
+        if(userRepository.findByPhone(registerAdminDTO.getPhone()) != null)return new ResponseAuthDTO<UserAdminDTO>("Numero de telefone em uso",true,null, null);
+        if(userRepository.findByCpf(registerAdminDTO.getCpf()) != null)return new ResponseAuthDTO<UserAdminDTO>("Cpf em uso",true,null, null);
+        if(userAdminRepository.findByIdentification(registerAdminDTO.getIdentification()) != null) return new ResponseAuthDTO<UserAdminDTO>("identificaçao em uso",true,null, null);
 
-        UserAdminModel userAdminModel = userMapper.userAdminDTOToUserAdminModel(userAdminDTO);
-        userAdminModel.setRole(UserRole.UserAdmin);
-        String EncryptedPassword = new BCryptPasswordEncoder().encode(userAdminDTO.getPassword());
+        UserAdminModel userAdminModel = userMapper.registerAdminDTOToUserAdminModel(registerAdminDTO);
+        String EncryptedPassword = new BCryptPasswordEncoder().encode(registerAdminDTO.getPassword());
         userAdminModel.setPassword(EncryptedPassword);
         var userAdmin = userAdminRepository.save(userAdminModel);
-        var usernamePassword = new UsernamePasswordAuthenticationToken(userAdminDTO.getUsername(), userAdminDTO.getPassword());
+        var usernamePassword = new UsernamePasswordAuthenticationToken(registerAdminDTO.getUsername(), registerAdminDTO.getPassword());
         var auth = this.authenticationManager.authenticate(usernamePassword);
         var token = tokenService.generateToken((UserModel) auth.getPrincipal());
         userAdmin.setPassword(null);
-        return new ResponseAuthDTO<UserAdminModel>("registro efetuado com sucesso",false,token, userAdmin);
+        UserAdminDTO userAdminDTO = userMapper.userAdminModelToUserAdminDTO(userAdmin);
+        return new ResponseAuthDTO<UserAdminDTO>("registro efetuado com sucesso",false,token, userAdminDTO);
     }
 
     @Override

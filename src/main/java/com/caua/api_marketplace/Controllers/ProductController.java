@@ -1,6 +1,7 @@
 package com.caua.api_marketplace.Controllers;
 
 import com.caua.api_marketplace.DTO.Generic.ResponseDTO;
+import com.caua.api_marketplace.DTO.Product.CreateProductDTO;
 import com.caua.api_marketplace.DTO.Product.ProductDTO;
 import com.caua.api_marketplace.Models.Product.ProductModel;
 import com.caua.api_marketplace.Services.ProductService;
@@ -19,8 +20,8 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping(value = "/create",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseDTO<ProductDTO> createProduct(@RequestBody ProductDTO productDTO) {
-        return productService.createProduct(productDTO);
+    public ResponseDTO<ProductDTO> createProduct(@RequestBody CreateProductDTO createProductDTO) {
+        return productService.createProduct(createProductDTO);
     }
 
 }

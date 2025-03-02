@@ -52,7 +52,7 @@ public class UserMapper {
         userClientDTO.setDateOfBirth(userClientModel.getDateOfBirth());
         return userClientDTO;
     }
-    public UserProducerModel RegisterProducerDTOToUserProducerModel(RegisterProducerDTO registerProducerDTO) {
+    public UserProducerModel registerProducerDTOToUserProducerModel(RegisterProducerDTO registerProducerDTO) {
         UserProducerModel userProducerModel = new UserProducerModel();
         userProducerModel.setUsername(registerProducerDTO.getUsername());
         userProducerModel.setEmail(registerProducerDTO.getEmail());
@@ -97,7 +97,7 @@ public class UserMapper {
         userProducerDTO.setFarm(userProducerModel.getFarm());
         return userProducerDTO;
     }
-    public UserAdminModel RegisterAdminDTOToUserAdminModel(RegisterAdminDTO registerAdminDTO) {
+    public UserAdminModel registerAdminDTOToUserAdminModel(RegisterAdminDTO registerAdminDTO) {
         UserAdminModel userAdminModel = new UserAdminModel();
         userAdminModel.setUsername(registerAdminDTO.getUsername());
         userAdminModel.setPassword(registerAdminDTO.getPassword());

@@ -1,5 +1,6 @@
 package com.caua.api_marketplace.Mappers;
 
+import com.caua.api_marketplace.DTO.Product.CreateProductDTO;
 import com.caua.api_marketplace.DTO.Product.ProductDTO;
 import com.caua.api_marketplace.Models.Product.ProductModel;
 import com.caua.api_marketplace.Models.User.UserProducerModel;
@@ -16,8 +17,25 @@ public class ProductMapper {
     @Autowired
     UserProducerRepository userProducerRepository;
 
+    public ProductModel createPorductDTOtoProductModel(CreateProductDTO createProductDTO) {
+        ProductModel productModel = new ProductModel();
+        productModel.setName(createProductDTO.getName());
+        productModel.setPrice(createProductDTO.getPrice());
+        productModel.setCategory(createProductDTO.getCategory());
+        productModel.setQuantity(createProductDTO.getQuantity());
+        Optional<UserProducerModel> userProducerModel = userProducerRepository.findById(createProductDTO.getProducerId());
+        if (userProducerModel.isPresent()) {
+            UserProducerModel userProducer = userProducerModel.get();
+            productModel.setProducer(userProducer);
+            return productModel;
+        }
+        else{
+            throw new RuntimeException();
+        }
+    }
     public ProductDTO ProductModelToProductDTO(ProductModel productModel) {
         ProductDTO productDTO = new ProductDTO();
+        productDTO.setId(productModel.getId());
         productDTO.setName(productModel.getName());
         productDTO.setPrice(productModel.getPrice());
         productDTO.setCategory(productModel.getCategory());
@@ -27,6 +45,7 @@ public class ProductMapper {
     }
     public ProductModel ProductDTOToProductModel(ProductDTO productDTO) {
         ProductModel productModel = new ProductModel();
+        productModel.setId(productDTO.getId());
         productModel.setName(productDTO.getName());
         productModel.setPrice(productDTO.getPrice());
         productModel.setCategory(productDTO.getCategory());

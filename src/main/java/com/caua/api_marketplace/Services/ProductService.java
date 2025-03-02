@@ -1,6 +1,7 @@
 package com.caua.api_marketplace.Services;
 
 import com.caua.api_marketplace.DTO.Generic.ResponseDTO;
+import com.caua.api_marketplace.DTO.Product.CreateProductDTO;
 import com.caua.api_marketplace.DTO.Product.ProductDTO;
 import com.caua.api_marketplace.Mappers.ProductMapper;
 import com.caua.api_marketplace.Models.Product.ProductModel;
@@ -16,9 +17,9 @@ public class ProductService {
     @Autowired
     private ProductMapper productMapper;
 
-    public ResponseDTO<ProductDTO> createProduct(ProductDTO productDTO){
-        ProductModel productModel = productRepository.save(productMapper.ProductDTOToProductModel(productDTO));
+    public ResponseDTO<ProductDTO> createProduct(CreateProductDTO createProductDTO) {
+        ProductModel productModel = productRepository.save(productMapper.createPorductDTOtoProductModel(createProductDTO));
         ProductDTO product = productMapper.ProductModelToProductDTO(productModel);
-        return new ResponseDTO<ProductDTO>("Produto criado com sucesso",false,productDTO);
+        return new ResponseDTO<ProductDTO>("Produto criado com sucesso",false,product);
     }
 }

@@ -1,4 +1,5 @@
 package com.caua.api_marketplace.Services;
+import com.caua.api_marketplace.DTO.Auth.RegisterClientDTO;
 import com.caua.api_marketplace.DTO.Auth.ResponseAuthDTO;
 import com.caua.api_marketplace.DTO.User.UserAdminDTO;
 import com.caua.api_marketplace.DTO.User.UserClientDTO;
@@ -45,26 +46,26 @@ public class AuthService implements UserDetailsService {
         return new ResponseAuthDTO<UserDetails>("login efetuado com sucesso",false,token, loadUserByUsername(username));
     }
 
-    public ResponseAuthDTO<UserClientModel> registerUserClient(UserClientDTO userClientDTO) {
+    public ResponseAuthDTO<UserClientDTO> registerUserClient(RegisterClientDTO registerClientDTO) {
 
-        if(userRepository.findByUsername(userClientDTO.getUsername()) != null)return new ResponseAuthDTO<UserClientModel>("Username existente",true,null, null);
-        if(userRepository.findByEmail(userClientDTO.getEmail()) != null)return new ResponseAuthDTO<UserClientModel>("email em uso",true,null, null);
-        if(userRepository.findByPhone(userClientDTO.getPhone()) != null)return new ResponseAuthDTO<UserClientModel>("numero de telefone em uso",true,null, null);
-        if(userRepository.findByCpf(userClientDTO.getCpf()) != null)return new ResponseAuthDTO<UserClientModel>("cpf em uso",true,null, null);
+        if(userRepository.findByUsername(registerClientDTO.getUsername()) != null)return new ResponseAuthDTO<UserClientDTO>("Username existente",true,null, null);
+        if(userRepository.findByEmail(registerClientDTO.getEmail()) != null)return new ResponseAuthDTO<UserClientDTO>("email em uso",true,null, null);
+        if(userRepository.findByPhone(registerClientDTO.getPhone()) != null)return new ResponseAuthDTO<UserClientDTO>("numero de telefone em uso",true,null, null);
+        if(userRepository.findByCpf(registerClientDTO.getCpf()) != null)return new ResponseAuthDTO<UserClientDTO>("cpf em uso",true,null, null);
 
-        UserClientModel userClientModel = userMapper.userClientDTOToUserClientModel(userClientDTO);
+        UserClientModel userClientModel = userMapper.userClientDTOToUserClientModel(registerClientDTO);
         userClientModel.setRole(UserRole.UserClient);
-        String EncryptedPassword = new BCryptPasswordEncoder().encode(userClientDTO.getPassword());
+        String EncryptedPassword = new BCryptPasswordEncoder().encode(registerClientDTO.getPassword());
         userClientModel.setPassword(EncryptedPassword);
         var userClient = userClientRepository.save(userClientModel);
-        var usernamePassword = new UsernamePasswordAuthenticationToken(userClientDTO.getUsername(), userClientDTO.getPassword());
+        var usernamePassword = new UsernamePasswordAuthenticationToken(registerClientDTO.getUsername(), registerClientDTO.getPassword());
         var auth = this.authenticationManager.authenticate(usernamePassword);
         var token = tokenService.generateToken((UserModel) auth.getPrincipal());
-        userClient.setPassword(null);
-        return new ResponseAuthDTO<UserClientModel>("registro efetuado com sucesso",false,token, userClient);
+
+        return new ResponseAuthDTO<UserClientDTO>("registro efetuado com sucesso",false,token, userClient);
     }
 
-    public ResponseAuthDTO<UserProducerModel> registerUserProducer(UserProducerDTO userProducerDTO) {
+    public ResponseAuthDTO<UserProducerDTO> registerUserProducer(UserProducerDTO userProducerDTO) {
 
         if(userRepository.findByUsername(userProducerDTO.getUsername()) != null)return new ResponseAuthDTO<UserProducerModel>("Username existente",true,null, null);
         if(userRepository.findByEmail(userProducerDTO.getEmail()) != null)return new ResponseAuthDTO<UserProducerModel>("Email em uso",true,null, null);
@@ -84,7 +85,7 @@ public class AuthService implements UserDetailsService {
         return new ResponseAuthDTO<UserProducerModel>("registro efetuado com sucesso",false,token, userProducer);
     }
 
-    public ResponseAuthDTO<UserAdminModel> registerUserAdmin(UserAdminDTO userAdminDTO) {
+    public ResponseAuthDTO<UserAdminDTO> registerUserAdmin(UserAdminDTO userAdminDTO) {
 
         if(userRepository.findByUsername(userAdminDTO.getUsername()) != null)return new ResponseAuthDTO<UserAdminModel>("Username existente",true,null, null);
         if(userRepository.findByEmail(userAdminDTO.getEmail()) != null)return new ResponseAuthDTO<UserAdminModel>("Email em uso",true,null, null);

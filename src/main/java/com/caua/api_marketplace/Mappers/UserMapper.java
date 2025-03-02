@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 public class UserMapper {
     public UserClientModel userClientDTOToUserClientModel(UserClientDTO userClientDTO) {
         UserClientModel userClientModel = new UserClientModel();
+        userClientModel.setId(userClientDTO.getId());
         userClientModel.setUsername(userClientDTO.getUsername());
         userClientModel.setEmail(userClientDTO.getEmail());
         userClientModel.setAddress(userClientDTO.getAddress());
@@ -26,6 +27,7 @@ public class UserMapper {
     public UserClientDTO userClientModelToUserClientDTO(UserClientModel userClientModel) {
         UserClientDTO userClientDTO = new UserClientDTO();
         userClientDTO.setUsername(userClientModel.getUsername());
+        userClientDTO.setId(userClientModel.getId());
         userClientDTO.setEmail(userClientModel.getEmail());
         userClientDTO.setAddress(userClientModel.getAddress());
         userClientDTO.setPhone(userClientModel.getPhone());
@@ -37,6 +39,7 @@ public class UserMapper {
     public UserProducerModel userProducerDTOToUserProducerModel(UserProducerDTO userProducerDTO) {
         UserProducerModel userProducerModel = new UserProducerModel();
         userProducerModel.setUsername(userProducerDTO.getUsername());
+        userProducerModel.setId(userProducerDTO.getId());
         userProducerModel.setEmail(userProducerDTO.getEmail());
         userProducerModel.setAddress(userProducerDTO.getAddress());
         userProducerModel.setPhone(userProducerDTO.getPhone());
@@ -53,6 +56,7 @@ public class UserMapper {
     public UserProducerDTO userProducerModelToUserProducerDTO(UserProducerModel userProducerModel) {
         UserProducerDTO userProducerDTO = new UserProducerDTO();
         userProducerDTO.setUsername(userProducerModel.getUsername());
+        userProducerDTO.setId(userProducerModel.getId());
         userProducerDTO.setEmail(userProducerModel.getEmail());
         userProducerDTO.setAddress(userProducerModel.getAddress());
         userProducerDTO.setPhone(userProducerModel.getPhone());
@@ -68,6 +72,7 @@ public class UserMapper {
     public UserAdminModel userAdminDTOToUserAdminModel(UserAdminDTO userAdminDTO) {
         UserAdminModel userAdminModel = new UserAdminModel();
         userAdminModel.setUsername(userAdminDTO.getUsername());
+        userAdminModel.setId(userAdminDTO.getId());
         userAdminModel.setEmail(userAdminDTO.getEmail());
         userAdminModel.setAddress(userAdminDTO.getAddress());
         userAdminModel.setPhone(userAdminDTO.getPhone());
@@ -81,6 +86,7 @@ public class UserMapper {
     public UserAdminDTO userAdminModelToUserAdminDTO(UserAdminModel userAdminModel) {
         UserAdminDTO userAdminDTO = new UserAdminDTO();
         userAdminDTO.setUsername(userAdminModel.getUsername());
+        userAdminDTO.setId(userAdminModel.getId());
         userAdminDTO.setEmail(userAdminModel.getEmail());
         userAdminDTO.setAddress(userAdminModel.getAddress());
         userAdminDTO.setPhone(userAdminModel.getPhone());

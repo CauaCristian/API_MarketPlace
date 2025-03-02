@@ -28,7 +28,7 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.POST , "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST , "/reservation/create").hasAuthority("ROLE_CLIENT")
                         .requestMatchers(HttpMethod.POST , "/product/create").hasAuthority("ROLE_ADMIN")
-                        .requestMatchers(HttpMethod.POST , "/auth/registerAdmin").permitAll()
+                        .requestMatchers(HttpMethod.POST , "/auth/registerAdmin").hasAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.POST , "/auth/registerProducer").hasAuthority("ROLE_ADMIN")
                         .anyRequest().authenticated()
                 )

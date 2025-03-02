@@ -1,12 +1,12 @@
 package com.caua.api_marketplace.Mappers;
 
+import com.caua.api_marketplace.DTO.Relation.CreateReservationDTO;
 import com.caua.api_marketplace.DTO.Relation.ReservationDTO;
 import com.caua.api_marketplace.Models.Product.ProductModel;
 import com.caua.api_marketplace.Models.Relation.ReservationModel;
 import com.caua.api_marketplace.Models.User.UserClientModel;
 import com.caua.api_marketplace.Models.User.UserProducerModel;
 import com.caua.api_marketplace.Repository.Product.ProductRepository;
-import com.caua.api_marketplace.Repository.Relation.ReservationRepository;
 import com.caua.api_marketplace.Repository.User.UserClientRepository;
 import com.caua.api_marketplace.Repository.User.UserProducerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,28 @@ public class ReservationMapper {
 
     @Autowired
     private UserClientRepository userClientRepository;
-
+    public ReservationModel createReservationDTOToReservationModel(CreateReservationDTO createReservationDTO) {
+        ReservationModel reservationModel = new ReservationModel();
+        reservationModel.setDateReservation(createReservationDTO.getDateReservation());
+        reservationModel.setPrice(createReservationDTO.getPrice());
+        reservationModel.setQuantity(createReservationDTO.getQuantity());
+        ProductModel productModel = productRepository.findById(createReservationDTO.getProductId()).get();
+        UserProducerModel userProducerModel = userProducerRepository.findById(createReservationDTO.getProducerId()).get();
+        UserClientModel userClientModel = userClientRepository.findById(createReservationDTO.getClientId()).get();
+        if(productModel != null){
+            if(userProducerModel != null){
+                if(userClientModel != null){
+                    reservationModel.setProduct(productModel);
+                    reservationModel.setProducer(userProducerModel);
+                    reservationModel.setClient(userClientModel);
+                    return reservationModel;
+                }
+                else throw new RuntimeException("client id invalido");
+            }
+            else throw new RuntimeException("producer id invalido");
+        }
+        else throw new RuntimeException("product id invalido");
+    }
     public ReservationModel reservationDTOToReservationModel(ReservationDTO reservationDTO){
         ReservationModel reservationModel = new ReservationModel();
         reservationModel.setDateReservation(reservationDTO.getDateReservation());

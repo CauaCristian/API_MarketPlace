@@ -29,7 +29,7 @@ public class ReservationModel {
     private double price;
     @Column(nullable = false)
     private LocalDate dateReservation;
-    @Column(nullable = false)
+
     private String status;
 
     public ReservationModel() {

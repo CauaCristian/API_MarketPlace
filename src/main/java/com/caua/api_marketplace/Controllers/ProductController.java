@@ -3,7 +3,7 @@ package com.caua.api_marketplace.Controllers;
 import com.caua.api_marketplace.DTO.Generic.ResponseDTO;
 import com.caua.api_marketplace.DTO.Product.CreateProductDTO;
 import com.caua.api_marketplace.DTO.Product.ProductDTO;
-import com.caua.api_marketplace.Models.Product.ProductModel;
+
 import com.caua.api_marketplace.Services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

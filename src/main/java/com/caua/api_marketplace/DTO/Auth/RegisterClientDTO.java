@@ -1,14 +1,13 @@
-package com.caua.api_marketplace.DTO.User;
+package com.caua.api_marketplace.DTO.Auth;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDate;
 
-public class UserAdminDTO {
-
-    private Long id;
-
+public class RegisterClientDTO {
     private String username;
+
+    private String password;
 
     private String email;
 
@@ -19,26 +18,9 @@ public class UserAdminDTO {
     private String cpf;
 
     private LocalDate dateOfBirth;
+
     @JsonProperty("image")
     private byte[] image;
-
-    private String identification;
-
-    public byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getUsername() {
         return username;
@@ -46,6 +28,14 @@ public class UserAdminDTO {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getEmail() {
@@ -87,12 +77,12 @@ public class UserAdminDTO {
     public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
-
-    public String getIdentification() {
-        return identification;
+    
+    public byte[] getImage() {
+    return image;
     }
 
-    public void setIdentification(String identification) {
-        this.identification = identification;
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 }

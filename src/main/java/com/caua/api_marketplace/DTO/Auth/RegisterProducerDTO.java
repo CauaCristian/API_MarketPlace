@@ -1,14 +1,14 @@
-package com.caua.api_marketplace.DTO.User;
+package com.caua.api_marketplace.DTO.Auth;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDate;
 
-public class UserAdminDTO {
-
-    private Long id;
-
+public class RegisterProducerDTO {
+    
     private String username;
+
+    private String password;
 
     private String email;
 
@@ -19,26 +19,17 @@ public class UserAdminDTO {
     private String cpf;
 
     private LocalDate dateOfBirth;
+
     @JsonProperty("image")
     private byte[] image;
 
-    private String identification;
+    private String surname;
 
-    public byte[] getImage() {
-        return image;
-    }
+    private String farm;
 
-    public void setImage(byte[] image) {
-        this.image = image;
-    }
+    private String rating;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private String numRating;
 
     public String getUsername() {
         return username;
@@ -46,6 +37,14 @@ public class UserAdminDTO {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getEmail() {
@@ -88,11 +87,43 @@ public class UserAdminDTO {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public String getIdentification() {
-        return identification;
+    public byte[] getImage() {
+        return image;
     }
 
-    public void setIdentification(String identification) {
-        this.identification = identification;
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getFarm() {
+        return farm;
+    }
+
+    public void setFarm(String farm) {
+        this.farm = farm;
+    }
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
+
+    public String getNumRating() {
+        return numRating;
+    }
+
+    public void setNumRating(String numRating) {
+        this.numRating = numRating;
     }
 }

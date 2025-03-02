@@ -44,7 +44,7 @@ public class AuthService implements UserDetailsService {
     public ResponseAuthDTO<UserDetails> login(String username, String password){
         var usernamePassword = new UsernamePasswordAuthenticationToken(username, password);
         var auth = this.authenticationManager.authenticate(usernamePassword);
-        var token = tokenService.generateToken((UserModel) auth.getPrincipal());
+        var token = this.tokenService.generateToken((UserModel) auth.getPrincipal());
         return new ResponseAuthDTO<UserDetails>("login efetuado com sucesso",false,token, loadUserByUsername(username));
     }
 
@@ -53,7 +53,6 @@ public class AuthService implements UserDetailsService {
         if(userRepository.findByEmail(registerClientDTO.getEmail()) != null)return new ResponseAuthDTO<UserClientDTO>("email em uso",true,null, null);
         if(userRepository.findByPhone(registerClientDTO.getPhone()) != null)return new ResponseAuthDTO<UserClientDTO>("numero de telefone em uso",true,null, null);
         if(userRepository.findByCpf(registerClientDTO.getCpf()) != null)return new ResponseAuthDTO<UserClientDTO>("cpf em uso",true,null, null);
-
         UserClientModel userClientModel = userMapper.registerClientDTOToUserClientModel(registerClientDTO);
         String EncryptedPassword = new BCryptPasswordEncoder().encode(registerClientDTO.getPassword());
         userClientModel.setPassword(EncryptedPassword);
@@ -72,7 +71,6 @@ public class AuthService implements UserDetailsService {
         if(userRepository.findByPhone(registerProducerDTO.getPhone()) != null)return new ResponseAuthDTO<UserProducerDTO>("Numero de telefone em uso",true,null, null);
         if(userRepository.findByCpf(registerProducerDTO.getCpf()) != null)return new ResponseAuthDTO<UserProducerDTO>("Cpf em uso",true,null, null);
         if(userProducerRepository.findBySurname(registerProducerDTO.getSurname()) != null) return new ResponseAuthDTO<UserProducerDTO>("Surname existente",true,null, null);
-
         UserProducerModel userProducerModel = userMapper.registerProducerDTOToUserProducerModel(registerProducerDTO);
         String EncryptedPassword = new BCryptPasswordEncoder().encode(registerProducerDTO.getPassword());
         userProducerModel.setPassword(EncryptedPassword);
@@ -80,7 +78,6 @@ public class AuthService implements UserDetailsService {
         var usernamePassword = new UsernamePasswordAuthenticationToken(registerProducerDTO.getUsername(), registerProducerDTO.getPassword());
         var auth = this.authenticationManager.authenticate(usernamePassword);
         var token = tokenService.generateToken((UserModel) auth.getPrincipal());
-        userProducer.setPassword(null);
         UserProducerDTO userProducerDTO = userMapper.userProducerModelToUserProducerDTO(userProducer);
         return new ResponseAuthDTO<UserProducerDTO>("registro efetuado com sucesso",false,token, userProducerDTO);
     }
@@ -92,7 +89,6 @@ public class AuthService implements UserDetailsService {
         if(userRepository.findByPhone(registerAdminDTO.getPhone()) != null)return new ResponseAuthDTO<UserAdminDTO>("Numero de telefone em uso",true,null, null);
         if(userRepository.findByCpf(registerAdminDTO.getCpf()) != null)return new ResponseAuthDTO<UserAdminDTO>("Cpf em uso",true,null, null);
         if(userAdminRepository.findByIdentification(registerAdminDTO.getIdentification()) != null) return new ResponseAuthDTO<UserAdminDTO>("identificaçao em uso",true,null, null);
-
         UserAdminModel userAdminModel = userMapper.registerAdminDTOToUserAdminModel(registerAdminDTO);
         String EncryptedPassword = new BCryptPasswordEncoder().encode(registerAdminDTO.getPassword());
         userAdminModel.setPassword(EncryptedPassword);
@@ -100,7 +96,6 @@ public class AuthService implements UserDetailsService {
         var usernamePassword = new UsernamePasswordAuthenticationToken(registerAdminDTO.getUsername(), registerAdminDTO.getPassword());
         var auth = this.authenticationManager.authenticate(usernamePassword);
         var token = tokenService.generateToken((UserModel) auth.getPrincipal());
-        userAdmin.setPassword(null);
         UserAdminDTO userAdminDTO = userMapper.userAdminModelToUserAdminDTO(userAdmin);
         return new ResponseAuthDTO<UserAdminDTO>("registro efetuado com sucesso",false,token, userAdminDTO);
     }

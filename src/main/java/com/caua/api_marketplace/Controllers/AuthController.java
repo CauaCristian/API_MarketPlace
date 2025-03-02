@@ -1,7 +1,6 @@
 package com.caua.api_marketplace.Controllers;
 
-import com.caua.api_marketplace.DTO.Auth.LoginDTO;
-import com.caua.api_marketplace.DTO.Auth.ResponseAuthDTO;
+import com.caua.api_marketplace.DTO.Auth.*;
 import com.caua.api_marketplace.DTO.User.UserAdminDTO;
 import com.caua.api_marketplace.DTO.User.UserClientDTO;
 import com.caua.api_marketplace.DTO.User.UserProducerDTO;
@@ -25,16 +24,19 @@ public class AuthController {
     public ResponseAuthDTO<UserDetails> login(@RequestBody LoginDTO loginDTO) {
        return authService.login(loginDTO.getUsername(), loginDTO.getPassword());
     }
-    @PostMapping(value = "/registerProducer", produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseAuthDTO<UserProducerModel> registerProducer(@RequestBody UserProducerDTO userProducerDTO) {
-        return authService.registerUserProducer(userProducerDTO);
-    }
+
     @PostMapping(value = "/registerClient",produces =  MediaType.APPLICATION_JSON_VALUE,consumes =  MediaType.APPLICATION_JSON_VALUE)
-    public ResponseAuthDTO<UserClientModel> registerClient(@RequestBody UserClientDTO userClientDTO) {
-        return authService.registerUserClient(userClientDTO);
+    public ResponseAuthDTO<UserClientDTO> registerClient(@RequestBody RegisterClientDTO registerClientDTO) {
+        return authService.registerUserClient(registerClientDTO);
     }
+
+    @PostMapping(value = "/registerProducer", produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseAuthDTO<UserProducerModel> registerProducer(@RequestBody RegisterProducerDTO registerProducerDTO) {
+        return authService.registerUserProducer(registerProducerDTO);
+    }
+
     @PostMapping(value = "/registerAdmin",produces =  MediaType.APPLICATION_JSON_VALUE,consumes =  MediaType.APPLICATION_JSON_VALUE)
-    public ResponseAuthDTO<UserAdminModel> registerAdmin(@RequestBody UserAdminDTO userAdminDTO) {
-        return authService.registerUserAdmin(userAdminDTO);
+    public ResponseAuthDTO<UserAdminModel> registerAdmin(@RequestBody RegisterAdminDTO registerAdminDTO) {
+        return authService.registerUserAdmin(registerAdminDTO);
     }
 }

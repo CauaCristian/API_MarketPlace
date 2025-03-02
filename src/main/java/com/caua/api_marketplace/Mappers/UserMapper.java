@@ -1,5 +1,8 @@
 package com.caua.api_marketplace.Mappers;
 
+import com.caua.api_marketplace.DTO.Auth.RegisterAdminDTO;
+import com.caua.api_marketplace.DTO.Auth.RegisterClientDTO;
+import com.caua.api_marketplace.DTO.Auth.RegisterProducerDTO;
 import com.caua.api_marketplace.DTO.User.UserAdminDTO;
 import com.caua.api_marketplace.DTO.User.UserClientDTO;
 import com.caua.api_marketplace.DTO.User.UserProducerDTO;
@@ -11,6 +14,19 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserMapper {
+    public UserClientModel registerClientDTOToUserClientModel(RegisterClientDTO registerClientDTO) {
+        UserClientModel userClientModel = new UserClientModel();
+        userClientModel.setUsername(registerClientDTO.getUsername());
+        userClientModel.setEmail(registerClientDTO.getEmail());
+        userClientModel.setPassword(registerClientDTO.getPassword());
+        userClientModel.setRole(UserRole.UserClient);
+        userClientModel.setCpf(registerClientDTO.getCpf());
+        userClientModel.setPhone(registerClientDTO.getPhone());
+        userClientModel.setAddress(registerClientDTO.getAddress());
+        userClientModel.setDateOfBirth(registerClientDTO.getDateOfBirth());
+        userClientModel.setImage(registerClientDTO.getImage());
+        return userClientModel;
+    }
     public UserClientModel userClientDTOToUserClientModel(UserClientDTO userClientDTO) {
         UserClientModel userClientModel = new UserClientModel();
         userClientModel.setId(userClientDTO.getId());
@@ -36,6 +52,21 @@ public class UserMapper {
         userClientDTO.setDateOfBirth(userClientModel.getDateOfBirth());
         return userClientDTO;
     }
+    public UserProducerModel RegisterProducerDTOToUserProducerModel(RegisterProducerDTO registerProducerDTO) {
+        UserProducerModel userProducerModel = new UserProducerModel();
+        userProducerModel.setUsername(registerProducerDTO.getUsername());
+        userProducerModel.setEmail(registerProducerDTO.getEmail());
+        userProducerModel.setAddress(registerProducerDTO.getAddress());
+        userProducerModel.setPhone(registerProducerDTO.getPhone());
+        userProducerModel.setImage(registerProducerDTO.getImage());
+        userProducerModel.setCpf(registerProducerDTO.getCpf());
+        userProducerModel.setDateOfBirth(registerProducerDTO.getDateOfBirth());
+        userProducerModel.setRole(UserRole.UserProducer);
+        userProducerModel.setPassword(registerProducerDTO.getPassword());
+        userProducerModel.setFarm(registerProducerDTO.getFarm());
+        userProducerModel.setSurname(registerProducerDTO.getSurname());
+        return userProducerModel;
+    }
     public UserProducerModel userProducerDTOToUserProducerModel(UserProducerDTO userProducerDTO) {
         UserProducerModel userProducerModel = new UserProducerModel();
         userProducerModel.setUsername(userProducerDTO.getUsername());
@@ -47,8 +78,6 @@ public class UserMapper {
         userProducerModel.setCpf(userProducerDTO.getCpf());
         userProducerModel.setDateOfBirth(userProducerDTO.getDateOfBirth());
         userProducerModel.setSurname(userProducerDTO.getSurname());
-        userProducerModel.setRating(userProducerDTO.getRating());
-        userProducerModel.setNumRating(userProducerDTO.getNumRating());
         userProducerModel.setFarm(userProducerDTO.getFarm());
         userProducerModel.setRole(UserRole.UserProducer);
         return userProducerModel;
@@ -65,9 +94,22 @@ public class UserMapper {
         userProducerDTO.setDateOfBirth(userProducerModel.getDateOfBirth());
         userProducerDTO.setSurname(userProducerModel.getSurname());
         userProducerDTO.setRating(userProducerModel.getRating());
-        userProducerDTO.setNumRating(userProducerModel.getNumRating());
         userProducerDTO.setFarm(userProducerModel.getFarm());
         return userProducerDTO;
+    }
+    public UserAdminModel RegisterAdminDTOToUserAdminModel(RegisterAdminDTO registerAdminDTO) {
+        UserAdminModel userAdminModel = new UserAdminModel();
+        userAdminModel.setUsername(registerAdminDTO.getUsername());
+        userAdminModel.setPassword(registerAdminDTO.getPassword());
+        userAdminModel.setEmail(registerAdminDTO.getEmail());
+        userAdminModel.setAddress(registerAdminDTO.getAddress());
+        userAdminModel.setPhone(registerAdminDTO.getPhone());
+        userAdminModel.setImage(registerAdminDTO.getImage());
+        userAdminModel.setCpf(registerAdminDTO.getCpf());
+        userAdminModel.setDateOfBirth(registerAdminDTO.getDateOfBirth());
+        userAdminModel.setRole(UserRole.UserAdmin);
+        userAdminModel.setIdentification(registerAdminDTO.getIdentification());
+        return userAdminModel;
     }
     public UserAdminModel userAdminDTOToUserAdminModel(UserAdminDTO userAdminDTO) {
         UserAdminModel userAdminModel = new UserAdminModel();

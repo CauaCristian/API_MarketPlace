@@ -27,10 +27,6 @@ public class RegisterProducerDTO {
 
     private String farm;
 
-    private String rating;
-
-    private String numRating;
-
     public String getUsername() {
         return username;
     }
@@ -109,21 +105,5 @@ public class RegisterProducerDTO {
 
     public void setFarm(String farm) {
         this.farm = farm;
-    }
-
-    public String getRating() {
-        return rating;
-    }
-
-    public void setRating(String rating) {
-        this.rating = rating;
-    }
-
-    public String getNumRating() {
-        return numRating;
-    }
-
-    public void setNumRating(String numRating) {
-        this.numRating = numRating;
     }
 }

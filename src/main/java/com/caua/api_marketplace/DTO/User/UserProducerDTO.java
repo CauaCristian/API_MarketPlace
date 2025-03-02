@@ -1,8 +1,5 @@
 package com.caua.api_marketplace.DTO.User;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Column;
-
 import java.time.LocalDate;
 
 public class UserProducerDTO {
@@ -27,9 +24,7 @@ public class UserProducerDTO {
 
     private String farm;
 
-    private String rating;
-
-    private String numRating;
+    private double rating;
 
     public byte[] getImage() {
         return image;
@@ -110,19 +105,12 @@ public class UserProducerDTO {
         this.farm = farm;
     }
 
-    public String getRating() {
+    public double getRating() {
         return rating;
     }
 
-    public void setRating(String rating) {
+    public void setRating(double rating) {
         this.rating = rating;
     }
 
-    public String getNumRating() {
-        return numRating;
-    }
-
-    public void setNumRating(String numRating) {
-        this.numRating = numRating;
-    }
 }

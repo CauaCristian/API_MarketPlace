@@ -15,20 +15,23 @@ public class UserProducerModel extends UserModel {
     private String surname;
     @Column(nullable=false)
     private String farm;
-    @Column(nullable=false)
-    private String rating;
-    @Column(nullable=false)
-    private String numRating;
+
+    private double rating;
+
+    private int qtdRating;
+
+    private double sumRating;
+
     @OneToMany(mappedBy = "producer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductModel> products = new ArrayList<>();
     @OneToMany(mappedBy = "producer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ReservationModel> reservations = new ArrayList<>();
 
-    public UserProducerModel(String surname, String farm, String rating, String numRating, List<ProductModel> products, List<ReservationModel> reservations) {
+    public UserProducerModel(String surname, String farm, double rating, int qtdRating, List<ProductModel> products, List<ReservationModel> reservations) {
         this.surname = surname;
         this.farm = farm;
         this.rating = rating;
-        this.numRating = numRating;
+        this.qtdRating = qtdRating;
         this.products = products;
         this.reservations = reservations;
     }
@@ -52,20 +55,20 @@ public class UserProducerModel extends UserModel {
         this.farm = farm;
     }
 
-    public String getRating() {
+    public double getRating() {
         return rating;
     }
 
-    public void setRating(String rating) {
+    public void setRating(double rating) {
         this.rating = rating;
     }
 
-    public String getNumRating() {
-        return numRating;
+    public int getQtdRating() {
+        return qtdRating;
     }
 
-    public void setNumRating(String numRating) {
-        this.numRating = numRating;
+    public void setQtdRating(int qtdRating) {
+        this.qtdRating = qtdRating;
     }
 
     public List<ProductModel> getProducts() {

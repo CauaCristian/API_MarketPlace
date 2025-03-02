@@ -47,22 +47,21 @@ public class AuthService implements UserDetailsService {
     }
 
     public ResponseAuthDTO<UserClientDTO> registerUserClient(RegisterClientDTO registerClientDTO) {
-
         if(userRepository.findByUsername(registerClientDTO.getUsername()) != null)return new ResponseAuthDTO<UserClientDTO>("Username existente",true,null, null);
         if(userRepository.findByEmail(registerClientDTO.getEmail()) != null)return new ResponseAuthDTO<UserClientDTO>("email em uso",true,null, null);
         if(userRepository.findByPhone(registerClientDTO.getPhone()) != null)return new ResponseAuthDTO<UserClientDTO>("numero de telefone em uso",true,null, null);
         if(userRepository.findByCpf(registerClientDTO.getCpf()) != null)return new ResponseAuthDTO<UserClientDTO>("cpf em uso",true,null, null);
 
-        UserClientModel userClientModel = userMapper.userClientDTOToUserClientModel(registerClientDTO);
+        UserClientModel userClientModel = userMapper.registerClientDTOToUserClientModel(registerClientDTO);
         userClientModel.setRole(UserRole.UserClient);
         String EncryptedPassword = new BCryptPasswordEncoder().encode(registerClientDTO.getPassword());
         userClientModel.setPassword(EncryptedPassword);
-        var userClient = userClientRepository.save(userClientModel);
+        UserClientModel userClient = userClientRepository.save(userClientModel);
         var usernamePassword = new UsernamePasswordAuthenticationToken(registerClientDTO.getUsername(), registerClientDTO.getPassword());
         var auth = this.authenticationManager.authenticate(usernamePassword);
         var token = tokenService.generateToken((UserModel) auth.getPrincipal());
-
-        return new ResponseAuthDTO<UserClientDTO>("registro efetuado com sucesso",false,token, userClient);
+        UserClientDTO userClientDTO = userMapper.userClientModelToUserClientDTO(userClient);
+        return new ResponseAuthDTO<UserClientDTO>("registro efetuado com sucesso",false,token, userClientDTO);
     }
 
     public ResponseAuthDTO<UserProducerDTO> registerUserProducer(UserProducerDTO userProducerDTO) {

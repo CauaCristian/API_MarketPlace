@@ -12,6 +12,9 @@ import com.caua.api_marketplace.Repository.User.UserProducerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class ReservationMapper {
     @Autowired
@@ -22,6 +25,15 @@ public class ReservationMapper {
 
     @Autowired
     private UserClientRepository userClientRepository;
+
+    public List<ReservationDTO> listReservationsModelToReservationDTO(List<ReservationModel> reservationModelList) {
+        List<ReservationDTO> reservationDTOList = new ArrayList<>();
+        for (ReservationModel reservationModel : reservationModelList) {
+            reservationDTOList.add(reservationModelToReservationDTO(reservationModel));
+        }
+        return reservationDTOList;
+    }
+
     public ReservationModel createReservationDTOToReservationModel(CreateReservationDTO createReservationDTO) {
         ReservationModel reservationModel = new ReservationModel();
         reservationModel.setDateReservation(createReservationDTO.getDateReservation());

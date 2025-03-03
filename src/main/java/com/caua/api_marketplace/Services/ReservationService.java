@@ -23,13 +23,13 @@ public class ReservationService {
     @Autowired
     private ReservationRepository reservationRepository;
     @Autowired
-    private ReservationMapper  reservationMapper;
-    @Autowired
     private UserProducerRepository userProducerRepository;
     @Autowired
     private UserClientRepository userClientRepository;
     @Autowired
     private  ProductRepository productRepository;
+    @Autowired
+    private ReservationMapper  reservationMapper;
 
     public ResponseDTO<ReservationDTO> createReservation(CreateReservationDTO createReservationDTO) {
         ReservationModel reservationModel =  this.reservationRepository.save(reservationMapper.createReservationDTOToReservationModel(createReservationDTO));

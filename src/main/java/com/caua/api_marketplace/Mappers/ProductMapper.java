@@ -9,6 +9,8 @@ import com.caua.api_marketplace.Repository.User.UserProducerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -16,7 +18,13 @@ import java.util.Optional;
 public class ProductMapper {
     @Autowired
     UserProducerRepository userProducerRepository;
-
+    public List<ProductDTO> listProductModelToListProductDTO(List<ProductModel> productModelList) {
+        List<ProductDTO> productDTOList = new ArrayList<>();
+        for (ProductModel productModel : productModelList) {
+            productDTOList.add(productModelToProductDTO(productModel));
+        }
+        return productDTOList;
+    }
     public ProductModel createPorductDTOtoProductModel(CreateProductDTO createProductDTO) {
         ProductModel productModel = new ProductModel();
         productModel.setName(createProductDTO.getName());
@@ -33,7 +41,7 @@ public class ProductMapper {
             throw new RuntimeException();
         }
     }
-    public ProductDTO ProductModelToProductDTO(ProductModel productModel) {
+    public ProductDTO productModelToProductDTO(ProductModel productModel) {
         ProductDTO productDTO = new ProductDTO();
         productDTO.setId(productModel.getId());
         productDTO.setName(productModel.getName());
@@ -43,7 +51,7 @@ public class ProductMapper {
         productDTO.setProducerId(productDTO.getProducerId());
         return productDTO;
     }
-    public ProductModel ProductDTOToProductModel(ProductDTO productDTO) {
+    public ProductModel productDTOToProductModel(ProductDTO productDTO) {
         ProductModel productModel = new ProductModel();
         productModel.setId(productDTO.getId());
         productModel.setName(productDTO.getName());

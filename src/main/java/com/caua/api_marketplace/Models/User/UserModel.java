@@ -39,8 +39,8 @@ public abstract class UserModel implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if(this.role == UserRole.UserAdmin) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_CLIENT"), new SimpleGrantedAuthority("ROLE_PRODUCER"));
+        if(this.role == UserRole.UserProducer) return List.of(new SimpleGrantedAuthority("ROLE_PRODUCER"),new SimpleGrantedAuthority("ROLE_CLIENT"));
         if(this.role == UserRole.UserClient) return List.of(new SimpleGrantedAuthority("ROLE_CLIENT"));
-        if(this.role == UserRole.UserProducer) return List.of(new SimpleGrantedAuthority("ROLE_PRODUCER"));
         return null;
     }
 

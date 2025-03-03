@@ -31,6 +31,7 @@ public class ProductMapper {
         productModel.setPrice(createProductDTO.getPrice());
         productModel.setCategory(createProductDTO.getCategory());
         productModel.setQuantity(createProductDTO.getQuantity());
+        productModel.setImage(createProductDTO.getImage());
         Optional<UserProducerModel> userProducerModel = userProducerRepository.findById(createProductDTO.getProducerId());
         if (userProducerModel.isPresent()) {
             UserProducerModel userProducer = userProducerModel.get();
@@ -48,7 +49,8 @@ public class ProductMapper {
         productDTO.setPrice(productModel.getPrice());
         productDTO.setCategory(productModel.getCategory());
         productDTO.setQuantity(productModel.getQuantity());
-        productDTO.setProducerId(productDTO.getProducerId());
+        productDTO.setProducerId(productModel.getProducer().getId());
+        productDTO.setImage(productModel.getImage());
         return productDTO;
     }
     public ProductModel productDTOToProductModel(ProductDTO productDTO) {

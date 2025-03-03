@@ -58,11 +58,11 @@ public class ReservationService {
     public ResponseDTO<ReservationDTO> updateReservation(ReservationDTO reservationDTO) {
         ReservationModel reservationModel = this.reservationRepository.findById(reservationDTO.getId()).orElse(null);
         if(reservationModel == null) return new ResponseDTO<>("reservation id incorreto",true,null);
-        ProductModel productModel = this.pr
-        reservationModel.setPrice(reservationDTO.getPrice());
-        reservationModel.setProduct();
+        ProductModel productModel = this.productRepository.findById(reservationDTO.getProductId()).orElse(null);
+        if(productModel == null) return new ResponseDTO<>("product id incorreto",true,null);
+        reservationModel.setProduct(productModel);
         reservationModel.setQuantity(reservationDTO.getQuantity());
         reservationModel.setDateReservation(reservationDTO.getDateReservation());
-
+        
     }
 }

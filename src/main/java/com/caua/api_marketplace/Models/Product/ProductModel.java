@@ -21,6 +21,9 @@ public class ProductModel {
     @ManyToOne
     @JoinColumn(name = "producer_id", nullable = false)
     private UserProducerModel producer;
+    @Lob
+    @Column(columnDefinition = "LONGBLOB")
+    private byte[] image;
 
     public ProductModel(long id, String name, double price, int quantity, String category, UserProducerModel producer) {
         this.id = id;
@@ -82,4 +85,12 @@ public class ProductModel {
     public void setProducer(UserProducerModel producer) {
         this.producer = producer;
     }
+
+    public byte[] getImage() {
+        return image;
+    }
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
 }

@@ -24,11 +24,6 @@ public class ProductService {
     @Autowired
     private UserProducerRepository userProducerRepository;
 
-    public ResponseDTO<ProductDTO> createProduct(CreateProductDTO createProductDTO) {
-        ProductModel productModel = productRepository.save(productMapper.createPorductDTOtoProductModel(createProductDTO));
-        ProductDTO product = productMapper.productModelToProductDTO(productModel);
-        return new ResponseDTO<>("Produto criado com sucesso",false,product);
-    }
     public ResponseDTO<List<ProductDTO>> getAll(){
         List<ProductModel> productModelList = productRepository.findAll();
         List<ProductDTO> productDTOList = productMapper.listProductModelToListProductDTO(productModelList);
@@ -57,5 +52,28 @@ public class ProductService {
         List<ProductDTO> listProductDTOByProducerAndCategory = productMapper.listProductModelToListProductDTO(listProductModelByProducerAndCategory);
         return new ResponseDTO<>("Lista de todos os produtos por id do produtor e categoria retornada com sucesso",false,listProductDTOByProducerAndCategory);
     }
-
+    public ResponseDTO<ProductDTO> createProduct(CreateProductDTO createProductDTO) {
+        ProductModel productModel = productRepository.save(productMapper.createPorductDTOtoProductModel(createProductDTO));
+        ProductDTO product = productMapper.productModelToProductDTO(productModel);
+        return new ResponseDTO<>("Produto criado com sucesso",false,product);
+    }
+    public ResponseDTO<ProductDTO> updateProduct(ProductDTO productDTO) {
+        ProductModel productModel = productRepository.findById(productDTO.getId()).orElse(null);
+        if(productModel == null) return new ResponseDTO<>("product id incorreto",true,null);
+        productModel.setName(productDTO.getName());
+        productModel.setImage(productModel.getImage());
+        productModel.setQuantity(productDTO.getQuantity());
+        productModel.setPrice(productDTO.getPrice());
+        productModel.setCategory(productDTO.getCategory());
+        ProductModel  productModelModed = productRepository.save(productModel);
+        ProductDTO productDTOModed = productMapper.productModelToProductDTO(productModelModed);
+        return new ResponseDTO<>("Produto modificado com sucesso",false,productDTOModed);
+    }
+    public ResponseDTO<ProductDTO> deleteProduct(Long id){
+        ProductModel productModel = productRepository.findById(id).orElse(null);
+        if(productModel == null) return new ResponseDTO<>("product id incorreto",true,null);
+        productRepository.delete(productModel);
+        ProductDTO productDTO = productMapper.productModelToProductDTO(productModel);
+        return new ResponseDTO<>("Produto removido com sucesso",false,productDTO);
+    }
 }

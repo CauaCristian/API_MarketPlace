@@ -1,5 +1,7 @@
 package com.caua.api_marketplace.DTO.Product;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ProductDTO {
 
     private Long id;
@@ -13,6 +15,9 @@ public class ProductDTO {
     private String category;
 
     private Long producerId;
+
+    @JsonProperty("image")
+    private byte[] image;
 
     public Long getId() {
         return id;
@@ -62,4 +67,11 @@ public class ProductDTO {
         this.producerId = producerId;
     }
 
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
 }

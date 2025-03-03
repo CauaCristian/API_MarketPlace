@@ -43,7 +43,7 @@ public class ProductController {
         return this.productService.updateProduct(productDTO);
     }
     @DeleteMapping(value = "/delete/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseDTO<ProductDTO> deleteProduct(@PathVariable("id") int id) {
+    public ResponseDTO<ProductDTO> deleteProduct(@PathVariable("id") Long id) {
         return this.productService.deleteProduct(id);
     }
 }

@@ -6,14 +6,20 @@ import com.caua.api_marketplace.DTO.Auth.RegisterProducerDTO;
 import com.caua.api_marketplace.DTO.User.UserAdminDTO;
 import com.caua.api_marketplace.DTO.User.UserClientDTO;
 import com.caua.api_marketplace.DTO.User.UserProducerDTO;
-import com.caua.api_marketplace.Models.User.UserAdminModel;
-import com.caua.api_marketplace.Models.User.UserClientModel;
-import com.caua.api_marketplace.Models.User.UserProducerModel;
-import com.caua.api_marketplace.Models.User.UserRole;
+import com.caua.api_marketplace.Models.User.*;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserMapper {
+
+    public List<Object> ListUserModelToListObjects(List<UserModel> listUserModel) {
+        List<Object> listObjects = new ArrayList<>();
+
+    }
+
     public UserClientModel registerClientDTOToUserClientModel(RegisterClientDTO registerClientDTO) {
         UserClientModel userClientModel = new UserClientModel();
         userClientModel.setUsername(registerClientDTO.getUsername());

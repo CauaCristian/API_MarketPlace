@@ -36,9 +36,9 @@ public class ReservationController {
     public ResponseDTO<ReservationDTO>  updateReservation(@RequestBody ReservationDTO reservationDTO) {
         return this.reservationService.updateReservation(reservationDTO);
     }
-    @DeleteMapping(value = "/delete/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseDTO<ReservationDTO> deleteReservation(@PathVariable Long id){
-        return this.reservationService.deleteReservation(id);
+    @DeleteMapping(value = "/delete/{idReservation}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseDTO<ReservationDTO> deleteReservation(@PathVariable Long idReservation) {
+        return this.reservationService.deleteReservation(idReservation);
     }
 
 }

@@ -34,7 +34,7 @@ public class ReservationService {
     public ResponseDTO<ReservationDTO> createReservation(CreateReservationDTO createReservationDTO) {
         ReservationModel reservationModel =  this.reservationRepository.save(reservationMapper.createReservationDTOToReservationModel(createReservationDTO));
         ReservationDTO reservationDTO = this.reservationMapper.reservationModelToReservationDTO(reservationModel);
-        return new ResponseDTO<ReservationDTO>("Reserva criado com sucesso",false,reservationDTO);
+        return new ResponseDTO<>("Reserva criado com sucesso",false,reservationDTO);
     }
     public ResponseDTO<List<ReservationDTO>> getAll() {
         List<ReservationModel> reservationModelList = this.reservationRepository.findAll();
@@ -63,6 +63,15 @@ public class ReservationService {
         reservationModel.setProduct(productModel);
         reservationModel.setQuantity(reservationDTO.getQuantity());
         reservationModel.setDateReservation(reservationDTO.getDateReservation());
-
+        ReservationModel reservationModelModed = this.reservationRepository.save(reservationModel);
+        ReservationDTO reservationDTOModed = this.reservationMapper.reservationModelToReservationDTO(reservationModelModed);
+        return new ResponseDTO<>("Reserva alterada com sucesso",false,reservationDTOModed);
+    }
+    public ResponseDTO<ReservationDTO> deleteReservation(Long idReservation) {
+        ReservationModel reservationModel = this.reservationRepository.findById(idReservation).orElse(null);
+        if(reservationModel == null) return new ResponseDTO<>("reservation id incorreto",true,null);
+        this.reservationRepository.delete(reservationModel);
+        ReservationDTO reservationDTOModel = this.reservationMapper.reservationModelToReservationDTO(reservationModel);
+        return new ResponseDTO<>("Reserva deletada com sucesso",false,reservationDTOModel);
     }
 }

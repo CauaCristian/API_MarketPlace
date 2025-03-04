@@ -7,6 +7,10 @@ import com.caua.api_marketplace.DTO.User.UserAdminDTO;
 import com.caua.api_marketplace.DTO.User.UserClientDTO;
 import com.caua.api_marketplace.DTO.User.UserProducerDTO;
 import com.caua.api_marketplace.Models.User.*;
+import com.caua.api_marketplace.Repository.User.UserAdminRepository;
+import com.caua.api_marketplace.Repository.User.UserClientRepository;
+import com.caua.api_marketplace.Repository.User.UserProducerRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,9 +19,40 @@ import java.util.List;
 @Service
 public class UserMapper {
 
-    public List<Object> ListUserModelToListObjects(List<UserModel> listUserModel) {
-        List<Object> listObjects = new ArrayList<>();
+    @Autowired
+    UserClientRepository userClientRepository;
 
+    @Autowired
+    UserProducerRepository userProducerRepository;
+
+    @Autowired
+    UserAdminRepository userAdminRepository;
+
+    public List<Object> ListUserModelsToListObjects(List<UserModel> listUserModels) {
+        List<Object> listUserObjects = new ArrayList<>();
+        for(UserModel userModel : listUserModels) {
+            if(userModel != null) {
+                if(userModel.getRole() == UserRole.UserAdmin) {
+                    UserAdminModel userAdminModel = this.userAdminRepository.findById(userModel.getId()).orElse(null);
+                    if(userAdminModel != null) {
+                        listUserObjects.add(userAdminModelToUserAdminDTO(userAdminModel));
+                    }
+                }
+                if(userModel.getRole() == UserRole.UserClient) {
+                    UserClientModel userClientModel = this.userClientRepository.findById(userModel.getId()).orElse(null);
+                    if(userClientModel != null) {
+                        listUserObjects.add(userClientModelToUserClientDTO(userClientModel));
+                    }
+                }
+                if(userModel.getRole() == UserRole.UserProducer) {
+                    UserProducerModel userProducerModel = this.userProducerRepository.findById(userModel.getId()).orElse(null);
+                    if(userProducerModel != null) {
+                        listUserObjects.add(userProducerModelToUserProducerDTO(userProducerModel));
+                    }
+                }
+            }
+        }
+        return listUserObjects;
     }
 
     public UserClientModel registerClientDTOToUserClientModel(RegisterClientDTO registerClientDTO) {

@@ -95,7 +95,7 @@ public class UserService {
         return new ResponseDTO<>("Admin atualizado com sucesso",false,userAdminDTOModed);
     }
     public ResponseDTO<Object> deleteUser(Long userId){
-        UserModel userModel = this.userAdminRepository.findById(userId).orElse(null);
+        UserModel userModel = this.userRepository.findById(userId).orElse(null);
         if(userModel == null) return new ResponseDTO<>("Id de usuario inexistente",true,null);
         this.userRepository.delete(userModel);
         Object userObject = this.userMapper.userModelToObject(userModel);

@@ -28,7 +28,7 @@ public class UserMapper {
     @Autowired
     UserAdminRepository userAdminRepository;
 
-    public Object UserModelToObject(UserModel userModel) {
+    public Object userModelToObject(UserModel userModel) {
         Object object = userModel;
         if(userModel.getRole() == UserRole.UserAdmin) {
             UserAdminModel userAdminModel = this.userAdminRepository.findById(userModel.getId()).orElse(null);
@@ -51,7 +51,7 @@ public class UserMapper {
         return object;
     }
 
-    public List<Object> ListUserModelsToListObjects(List<UserModel> listUserModels) {
+    public List<Object> listUserModelsToListObjects(List<UserModel> listUserModels) {
         List<Object> listUserObjects = new ArrayList<>();
         for(UserModel userModel : listUserModels) {
             if(userModel != null) {

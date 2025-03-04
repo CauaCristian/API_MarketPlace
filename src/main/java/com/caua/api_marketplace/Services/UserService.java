@@ -19,7 +19,7 @@ public class UserService {
 
     public ResponseDTO<List<Object>> getAll(){
         List<UserModel> ListUsersModels = this.userRepository.findAll();
-        List<Object> ListUsersObject = this.userMapper.ListUserModelsToListObjects(ListUsersModels);
+        List<Object> ListUsersObject = this.userMapper.listUserModelsToListObjects(ListUsersModels);
         return new ResponseDTO<>("Lista de usuarios retornada com sucesso",false,ListUsersObject);
     }
     public ResponseDTO<List<Object>> getAllByUserType(String userType){
@@ -38,13 +38,13 @@ public class UserService {
                 throw new RuntimeException("Tipo de usuário inválido: " + userType);
         }
         List<UserModel> listUsersModels = this.userRepository.findByRole(userRole);
-        List<Object> ListUsersObject = this.userMapper.ListUserModelsToListObjects(listUsersModels);
+        List<Object> ListUsersObject = this.userMapper.listUserModelsToListObjects(listUsersModels);
         return new ResponseDTO<>("Lista de usuarios por type retornada com sucesso",false,ListUsersObject);
     }
     public ResponseDTO<Object> getByUsername(String username){
         UserModel userModel = this.userRepository.findByUsernameIgnoreCase(username);
         if(userModel == null) return new ResponseDTO<>("Usuario inexistente",true,null);
-        Object userObject = this.userMapper.UserModelToObject(userModel);
+        Object userObject = this.userMapper.userModelToObject(userModel);
         return new ResponseDTO<>("Usuario encontrado",false,userObject);
     }
 }

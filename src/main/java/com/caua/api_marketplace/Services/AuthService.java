@@ -41,11 +41,13 @@ public class AuthService implements UserDetailsService {
     @Lazy
     private AuthenticationManager authenticationManager;
 
-    public ResponseAuthDTO<UserDetails> login(String username, String password){
+    public ResponseAuthDTO<Object> login(String username, String password){
         var usernamePassword = new UsernamePasswordAuthenticationToken(username, password);
         var auth = this.authenticationManager.authenticate(usernamePassword);
         var token = this.tokenService.generateToken((UserModel) auth.getPrincipal());
-        return new ResponseAuthDTO<UserDetails>("login efetuado com sucesso",false,token, loadUserByUsername(username));
+        UserModel userModel = this.userRepository.findByUsernameIgnoreCase(username);
+        Object userLoged = this.userMapper.userModelToObject(userModel);
+        return new ResponseAuthDTO<Object>("login efetuado com sucesso",false,token, userLoged);
     }
 
     public ResponseAuthDTO<UserClientDTO> registerUserClient(RegisterClientDTO registerClientDTO) {

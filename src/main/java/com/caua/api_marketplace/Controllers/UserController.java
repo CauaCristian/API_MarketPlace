@@ -32,20 +32,20 @@ public class UserController {
     public ResponseDTO<Object> getByUsername(@PathVariable String username){
         return this.userService.getByUsername(username);
     }
-//    @PutMapping(value = "/updateUserClient",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseDTO<UserClientDTO> updateUserClient(@RequestBody UserClientModel userClientModel){
-//        return this.userService.updateUserClient(userClientModel);
-//    }
-//    @PutMapping(value = "/updateUserProducer",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseDTO<UserProducerDTO> updateUserProducer(@RequestBody UserProducerModel userProducerModel){
-//        return this.userService.updateUserProducer(userProducerModel);
-//    }
-//    @PutMapping(value = "/updateUserAdmin",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseDTO<UserAdminDTO> updateUserAdmin(@RequestBody UserAdminModel userAdminModel){
-//        return this.userService.updateUserAdmin(userAdminModel);
-//    }
-//    @DeleteMapping(value = "/delete/{idUser}")
-//    public ResponseDTO<Object> deleteUser(@PathVariable Long idUser){
-//        return this.userService.deleteUser(idUser);
-//    }
+    @PutMapping(value = "/updateUserClient",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseDTO<UserClientDTO> updateUserClient(@RequestBody UserClientDTO userClientModel){
+        return this.userService.updateUserClient(userClientModel);
+    }
+    @PutMapping(value = "/updateUserProducer",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseDTO<UserProducerDTO> updateUserProducer(@RequestBody UserProducerDTO userProducerModel){
+        return this.userService.updateUserProducer(userProducerModel);
+    }
+    @PutMapping(value = "/updateUserAdmin",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseDTO<UserAdminDTO> updateUserAdmin(@RequestBody UserAdminDTO userAdminModel){
+        return this.userService.updateUserAdmin(userAdminModel);
+    }
+    @DeleteMapping(value = "/delete/{idUser}")
+    public ResponseDTO<Object> deleteUser(@PathVariable Long idUser){
+        return this.userService.deleteUser(idUser);
+    }
 }

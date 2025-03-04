@@ -28,6 +28,29 @@ public class UserMapper {
     @Autowired
     UserAdminRepository userAdminRepository;
 
+    public Object UserModelToObject(UserModel userModel) {
+        Object object = userModel;
+        if(userModel.getRole() == UserRole.UserAdmin) {
+            UserAdminModel userAdminModel = this.userAdminRepository.findById(userModel.getId()).orElse(null);
+            if(userAdminModel != null) {
+                object = userAdminModelToUserAdminDTO(userAdminModel);
+            }
+        }
+        if(userModel.getRole() == UserRole.UserClient) {
+            UserClientModel userClientModel = this.userClientRepository.findById(userModel.getId()).orElse(null);
+            if(userClientModel != null) {
+                object = userClientModelToUserClientDTO(userClientModel);
+            }
+        }
+        if(userModel.getRole() == UserRole.UserProducer) {
+            UserProducerModel userProducerModel = this.userProducerRepository.findById(userModel.getId()).orElse(null);
+            if(userProducerModel != null) {
+                object = userProducerModelToUserProducerDTO(userProducerModel);
+            }
+        }
+        return object;
+    }
+
     public List<Object> ListUserModelsToListObjects(List<UserModel> listUserModels) {
         List<Object> listUserObjects = new ArrayList<>();
         for(UserModel userModel : listUserModels) {
